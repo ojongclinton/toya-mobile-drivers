@@ -1,0 +1,16 @@
+workflows:
+  ios:
+    name: Build iOS
+    max_build_duration: 120
+    environment:
+      vars:
+        NODE_ENV: production
+    scripts:
+      - name: Install dependencies
+        script: |
+          yarn install
+      - name: Build the app
+        script: |
+          npx react-native run-ios --configuration Release
+    artifacts:
+      - build/ios/iphoneos/*.app

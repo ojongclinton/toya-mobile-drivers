@@ -1,0 +1,45 @@
+{
+  "cli": {
+    "version": ">= 13.2.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
+      },
+      "ios": {
+        "simulator": true,
+        "image": "macos-tahoe-26.4-xcode-26.4"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
+      },
+      "ios": {
+        "image": "macos-tahoe-26.4-xcode-26.4"
+      }
+    },
+    "production": {
+      "env": {
+        "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
+      },
+      "ios": {
+        "image": "macos-tahoe-26.4-xcode-26.4",
+        "resourceClass": "m-medium"
+      },
+      "android": {
+        "image": "latest"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

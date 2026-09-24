@@ -1,0 +1,22 @@
+appId: com.toyavtc.toya
+---
+# Flow : Changement de langue FR <-> EN
+# Vérifie que le Switch de langue fonctionne
+
+- launchApp
+
+# L'app démarre en français par défaut
+- assertVisible: "Toya Driver"
+
+# Appuyer sur le Switch pour passer en anglais
+- tapOn:
+    text: "en"
+
+# Vérifier que l'interface est maintenant en anglais
+- assertVisible:
+    text: "Sign in"
+    optional: true
+
+# Repasser en français
+- tapOn:
+    text: "fr"

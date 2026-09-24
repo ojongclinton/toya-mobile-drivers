@@ -1,0 +1,159 @@
+{
+  "expo": {
+    "name": "Toya Driver",
+    "slug": "toya-driver",
+    "version": "1.0.7",
+    "orientation": "portrait",
+    "icon": "./assets/images/toyalogo2.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/images/toyalogo2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0d0521"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.toyavtc.toya",
+      "buildNumber": "1",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "config": {
+        "usesNonExemptEncryption": false,
+        "googleMapsApiKey": "AIzaSyDkI7Z3kGsekAT3Hnh6dZZsrWunrbVf5kw"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Nous avons besoin de votre localisation pour afficher votre position sur la carte et trouver des courses à proximité",
+        "NSLocationAlwaysUsageDescription": "Nous avons besoin de votre localisation en arrière-plan pour suivre vos trajets et vous alerter des nouvelles courses",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Nous avons besoin de votre localisation en arrière-plan pour le suivi des courses et la navigation",
+        "NSPhotoLibraryUsageDescription": "L'application a besoin d'accéder à votre galerie photos pour télécharger votre photo de profil et vos documents",
+        "NSCameraUsageDescription": "L'application a besoin d'accéder à votre caméra pour prendre votre photo de profil et photographier vos documents",
+        "NSPhotoLibraryAddUsageDescription": "L'application a besoin d'enregistrer des photos dans votre galerie",
+        "NSSpeechRecognitionUsageDescription": "Cette app utilise la reconnaissance vocale pour lire ou convertir vos messages à voix haute",
+        "UIBackgroundModes": [
+          "location",
+          "fetch",
+          "remote-notification"
+        ],
+        "UIDeviceFamily": [
+          1
+        ],
+        "MinimumOSVersion": "16.0"
+      }
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/toyalogo2.png",
+        "backgroundColor": "#ffffff"
+      },
+      "notification": {
+        "icon": "./assets/images/notification_icon.png",
+        "color": "#6B3FA0"
+      },
+      "package": "com.toyavtc.toya",
+      "versionCode": 19,
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "googleServicesFile": "./google-services.json",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
+        }
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/toyalogo.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24,
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "buildToolsVersion": "35.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "16.4",
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"
+          ]
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Autoriser $(PRODUCT_NAME) à utiliser votre localisation en arrière-plan pour le suivi des courses"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "L'application a besoin d'accéder à vos photos pour télécharger votre photo de profil et vos documents",
+          "cameraPermission": "L'application a besoin d'accéder à votre caméra pour prendre votre photo de profil et photographier vos documents"
+        }
+      ],
+      [
+        "@react-native-firebase/app",
+        {
+          "iosBundleId": "com.toyavtc.toya"
+        }
+      ],
+      [
+        "@react-native-firebase/messaging",
+        {
+          "androidNotificationChannelId": "default",
+          "androidNotificationColor": "#FFFFFF"
+        }
+      ],
+      "expo-web-browser",
+      "./plugins/withGoogleMapsFix",
+      [
+        "expo-notifications",
+        {
+          "color": "#6B3FA0",
+          "defaultChannel": "default",
+          "sounds": []
+        }
+      ],
+      "expo-audio"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d860d293-e03c-470c-b5c0-f096b52da2db"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fbe18e38-ea9a-4cbc-a45f-65ed7bdf93ea",
+      "fallbackToCacheTimeout": 0
+    }
+  }
+}

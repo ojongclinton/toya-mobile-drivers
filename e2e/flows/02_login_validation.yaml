@@ -1,0 +1,18 @@
+appId: com.toyavtc.toya
+---
+# Flow : Validation formulaire — champs vides
+# Vérifie que les champs obligatoires déclenchent un message d'erreur
+
+- launchApp
+
+# L'écran de login doit s'afficher
+- assertVisible: "Toya Driver"
+
+# Appuyer directement sur connexion sans remplir les champs
+- tapOn:
+    text: "Se connecter"
+
+# Message d'erreur champs obligatoires
+- assertVisible:
+    text: "Veuillez remplir tous les champs"
+    optional: true

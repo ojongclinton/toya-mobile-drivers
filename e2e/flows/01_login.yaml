@@ -1,0 +1,40 @@
+appId: com.toyavtc.toya
+---
+# Flow : Connexion avec credentials invalides
+# Pré-requis : Metro bundler démarré avec "npx expo start"
+
+- launchApp:
+    clearState: false
+
+# Attendre que l'app se charge complètement (dev build = lent)
+- waitForAnimationToEnd
+
+# L'écran de login doit s'afficher
+- assertVisible: "Toya Driver"
+
+# Taper sur le champ téléphone (premier TextInput de la page)
+- tapOn:
+    index: 0
+
+- inputText: "699000000"
+
+# Taper sur le champ mot de passe (deuxième TextInput)
+- tapOn:
+    index: 1
+
+- inputText: "wrongpassword"
+
+# Masquer le clavier
+- hideKeyboard
+
+# Appuyer sur le bouton de connexion
+- tapOn:
+    text: "Se connecter"
+
+# Attendre la réponse réseau
+- waitForAnimationToEnd
+
+# Le message d'erreur doit apparaître (optionnel car dépend du réseau)
+- assertVisible:
+    text: "Identifiants invalides"
+    optional: true

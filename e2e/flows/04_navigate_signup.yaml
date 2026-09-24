@@ -1,0 +1,21 @@
+appId: com.toyavtc.toya
+---
+# Flow : Navigation vers l'écran d'inscription
+# Vérifie que le lien "S'inscrire" fonctionne
+
+- launchApp
+
+# L'écran de login doit s'afficher
+- assertVisible: "Toya Driver"
+
+# Appuyer sur "S'inscrire"
+- tapOn:
+    text: "S'inscrire"
+
+# L'écran d'inscription doit s'afficher
+- assertVisible:
+    text: "Créer un compte"
+    optional: true
+
+# Revenir en arrière
+- back

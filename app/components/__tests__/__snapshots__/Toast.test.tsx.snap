@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast — snapshots snapshot variant accept 1`] = `
+<View
+  collapsable={false}
+  pointerEvents="none"
+  style={
+    {
+      "alignSelf": "center",
+      "backgroundColor": "#1565c0",
+      "borderRadius": 24,
+      "bottom": 100,
+      "elevation": 10,
+      "opacity": 1,
+      "paddingHorizontal": 24,
+      "paddingVertical": 12,
+      "position": "absolute",
+      "zIndex": 999,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#fff",
+        "fontSize": 15,
+        "fontWeight": "600",
+      }
+    }
+  >
+    Accepté
+  </Text>
+</View>
+`;
+
+exports[`Toast — snapshots snapshot variant cancel 1`] = `
+<View
+  collapsable={false}
+  pointerEvents="none"
+  style={
+    {
+      "alignSelf": "center",
+      "backgroundColor": "#2e7d32",
+      "borderRadius": 24,
+      "bottom": 100,
+      "elevation": 10,
+      "opacity": 1,
+      "paddingHorizontal": 24,
+      "paddingVertical": 12,
+      "position": "absolute",
+      "zIndex": 999,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#fff",
+        "fontSize": 15,
+        "fontWeight": "600",
+      }
+    }
+  >
+    Annulé
+  </Text>
+</View>
+`;
+
+exports[`Toast — snapshots snapshot variant complete 1`] = `
+<View
+  collapsable={false}
+  pointerEvents="none"
+  style={
+    {
+      "alignSelf": "center",
+      "backgroundColor": "#6a1b9a",
+      "borderRadius": 24,
+      "bottom": 100,
+      "elevation": 10,
+      "opacity": 1,
+      "paddingHorizontal": 24,
+      "paddingVertical": 12,
+      "position": "absolute",
+      "zIndex": 999,
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#fff",
+        "fontSize": 15,
+        "fontWeight": "600",
+      }
+    }
+  >
+    Terminé
+  </Text>
+</View>
+`;
