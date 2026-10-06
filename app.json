@@ -2,7 +2,7 @@
   "expo": {
     "name": "Toya Driver",
     "slug": "toya-driver",
-    "version": "1.0.7",
+    "version": "1.0.10",
     "orientation": "portrait",
     "icon": "./assets/images/toyalogo2.png",
     "scheme": "myapp",
@@ -36,9 +36,13 @@
         "UIBackgroundModes": [
           "location",
           "fetch",
+          "remote-notification",
+          "location",
+          "fetch",
           "remote-notification"
         ],
         "UIDeviceFamily": [
+          1,
           1
         ],
         "MinimumOSVersion": "16.0"
@@ -60,7 +64,17 @@
         "android.permission.INTERNET",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
       ],
       "googleServicesFile": "./google-services.json",
       "config": {
@@ -145,15 +159,14 @@
         "origin": false
       },
       "eas": {
-        "projectId": "d860d293-e03c-470c-b5c0-f096b52da2db"
+        "projectId": "27db33e2-d0f1-4c7e-8754-a73cae640ee2"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
+    "runtimeVersion": "1.0.10",
     "updates": {
-      "url": "https://u.expo.dev/fbe18e38-ea9a-4cbc-a45f-65ed7bdf93ea",
-      "fallbackToCacheTimeout": 0
-    }
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/27db33e2-d0f1-4c7e-8754-a73cae640ee2"
+    },
+    "owner": "toya-4u"
   }
 }

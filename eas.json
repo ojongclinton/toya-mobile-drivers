@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 13.2.0"
+    "version": ">= 13.2.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -8,6 +9,8 @@
       "distribution": "internal",
       "env": {
         "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_BASE_URL": "https://staging-api.toya-vtc.com/api",
+        "EXPO_PUBLIC_WS_BASE_URL": "wss://staging-api.toya-vtc.com",
         "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
       },
       "ios": {
@@ -19,6 +22,8 @@
       "distribution": "internal",
       "env": {
         "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_BASE_URL": "https://staging-api.toya-vtc.com/api",
+        "EXPO_PUBLIC_WS_BASE_URL": "wss://staging-api.toya-vtc.com",
         "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
       },
       "ios": {
@@ -28,6 +33,8 @@
     "production": {
       "env": {
         "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_BASE_URL": "https://api.toya-vtc.com/api",
+        "EXPO_PUBLIC_WS_BASE_URL": "wss://api.toya-vtc.com",
         "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
       },
       "ios": {
@@ -37,9 +44,23 @@
       "android": {
         "image": "latest"
       }
+    },
+    "testflight": {
+      "extends": "production",
+      "channel": "testflight",
+      "autoIncrement": true,
+      "env": {
+        "EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK": "1",
+        "EXPO_PUBLIC_BASE_URL": "https://staging-api.toya-vtc.com/api",
+        "EXPO_PUBLIC_WS_BASE_URL": "wss://staging-api.toya-vtc.com",
+        "EXPO_PUBLIC_GOOGLE_WEATHER_API_KEY": "AIzaSyDk23cRpIB-7kdqSuaucS3p-_syAgKNgEM"
+      }
     }
   },
   "submit": {
-    "production": {}
+    "production": {},
+    "testflight": {
+      "extends": "production"
+    }
   }
 }
