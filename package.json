@@ -13,7 +13,8 @@
     "e2e": "maestro test e2e/flows",
     "e2e:login": "maestro test e2e/flows/01_login.yaml",
     "lint": "expo lint",
-    "postinstall": "node fix-react-native-maps.js"
+    "postinstall": "node fix-react-native-maps.js",
+    "eas-build-post-install": "node scripts/prepare-google-services.js"
   },
   "jest": {
     "preset": "jest-expo"
