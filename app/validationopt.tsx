@@ -1,4 +1,5 @@
 import BASE_URL from "@/constants/api/BASE_URL";
+import WS_BASE_URL from "@/constants/api/WS_BASE_URL";
 import React, { useState, useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -47,8 +48,7 @@ function Validatiopot({ navigation }: { navigation: any }) {
   const Connecttoweb = async () => {
     const deposite = await AsyncStorage.getItem("deposite");
     const idchauffeur = await AsyncStorage.getItem("userId");
-    const wsUrl = `wss://toya-backend-production.up.railway.app/ws/payment/status/${deposite}/${idchauffeur}/`;
-    // const wsUrl = `ws://pre-prod.toya-vtc.com/ws/payment/status/${deposite}/${idchauffeur}/`;
+    const wsUrl = `${WS_BASE_URL}/ws/payment/status/${deposite}/${idchauffeur}/`;
 
     ws.current = new WebSocket(wsUrl);
 

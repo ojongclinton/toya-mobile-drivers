@@ -1,4 +1,5 @@
-const CONVERSATION_URL = "wss://toya-backend-production.up.railway.app/ws/conversation/";
-// const CONVERSATION_URL = "wss://pre-prod.toya-vtc.com/ws/conversation/";
+import WS_BASE_URL from "./WS_BASE_URL";
+
+const CONVERSATION_URL = `${WS_BASE_URL}/ws/conversation/`;
 
 export default CONVERSATION_URL;

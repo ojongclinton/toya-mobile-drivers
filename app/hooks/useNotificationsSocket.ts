@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import WS_BASE_URL from "@/constants/api/WS_BASE_URL";
 
 type Params = {
   onMessage: (data: any) => void;
 };
 
-const NOTIF_WS_URL_BASE = "wss://toya-backend-production.up.railway.app/ws/notifications/";
-// const NOTIF_WS_URL_BASE = "wss://pre-prod.toya-vtc.com/ws/notifications/";
 const MAX_RECONNECT_DELAY_MS = 30000;
 const PING_INTERVAL_MS = 30000;
 
@@ -38,7 +37,7 @@ export const useNotificationsSocket = ({ onMessage }: Params) => {
       return;
     }
 
-    const url = `${NOTIF_WS_URL_BASE}${driverId}/?token=${token}`;
+    const url = `${WS_BASE_URL}/ws/notifications/${driverId}/?token=${token}`;
 
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);

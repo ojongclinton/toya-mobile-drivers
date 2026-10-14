@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import WS_BASE_URL from "@/constants/api/WS_BASE_URL";
 
 type Params = {
   onMessage: (data: any) => void;
 };
 
-const RIDE_STATUS_WS_URL_BASE = "wss://toya-backend-production.up.railway.app/ws/ride-status/";
-// const RIDE_STATUS_WS_URL_BASE = "wss://pre-prod.toya-vtc.com/ws/ride-status/";
 const MAX_RECONNECT_DELAY_MS = 30000;
 const PING_INTERVAL_MS = 30000;
 const INVALID_TOKEN_CLOSE_CODE = 4001;
@@ -33,7 +32,7 @@ export const useRideStatusSocket = ({ onMessage }: Params) => {
     try {
       const token = await AsyncStorage.getItem("authToken");
       if (!token) { isConnectingRef.current = false; return; }
-      const url = `${RIDE_STATUS_WS_URL_BASE}?token=${token}`;
+      const url = `${WS_BASE_URL}/ws/ride-status/?token=${token}`;
 
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);

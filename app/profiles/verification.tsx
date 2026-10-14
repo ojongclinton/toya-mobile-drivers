@@ -93,6 +93,7 @@ export default function Verification({ navigation }: { navigation: any }) {
     recto: null,
     verso: null,
     control: null,
+    insurance: null,
     casier: null,
     transport_s5: null,
     carte_bleue: null,
@@ -143,7 +144,7 @@ export default function Verification({ navigation }: { navigation: any }) {
   const isApproved = status?.toLowerCase() === "validated";
 
   const handleSubmit = async () => {
-    const { photo, contrat, recto, verso, control, casier, transport_s5, carte_bleue } = documents;
+    const { photo, contrat, recto, verso, control, insurance, casier, transport_s5, carte_bleue } = documents;
 
     // ✅ Validation conditionnelle : stricte pour création, flexible pour mise à jour
     if (!isApproved) {
@@ -158,6 +159,7 @@ export default function Verification({ navigation }: { navigation: any }) {
         !recto ||
         !verso ||
         !control ||
+        !insurance ||
         !transport_s5 ||
         !carte_bleue ||
         (prestation === "prestige" && !casier)
@@ -178,6 +180,7 @@ export default function Verification({ navigation }: { navigation: any }) {
         recto ||
         verso ||
         control ||
+        insurance ||
         casier ||
         transport_s5 ||
         carte_bleue;
@@ -213,7 +216,8 @@ export default function Verification({ navigation }: { navigation: any }) {
         contrat: "vehicle_rental_contract",
         recto: "driving_licence_front",
         verso: "driving_licence_back",
-        control: "insurrance_file",
+        control: "technical_control_document",
+        insurance: "insurrance_file",
         casier: "criminal_record_certificate",
         transport_s5: "transport_license_s5",
         carte_bleue: "blue_card",
@@ -262,6 +266,7 @@ export default function Verification({ navigation }: { navigation: any }) {
           recto: null,
           verso: null,
           control: null,
+          insurance: null,
           casier: null,
           transport_s5: null,
           carte_bleue: null,
@@ -512,6 +517,7 @@ export default function Verification({ navigation }: { navigation: any }) {
           { key: "recto", label: t("permit_front"), icon: "card-account-details" },
           { key: "verso", label: t("permit_back"), icon: "card-account-details" },
           { key: "control", label: t("technical_control"), icon: "tools" },
+          { key: "insurance", label: i18n.language.startsWith("fr") ? "Assurance *" : "Insurance *", icon: "shield-check" },
           { key: "transport_s5", label: i18n.language.startsWith("fr") ? "Licence de transport public S5 *" : "Public transport license S5 *", icon: "license" },
           { key: "carte_bleue", label: i18n.language.startsWith("fr") ? "Carte bleue *" : "Blue card *", icon: "credit-card" },
         ].map(({ key, label, icon }) => (
