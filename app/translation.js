@@ -167,7 +167,7 @@ const resources = {
       tryaigin: "Réessayer",
       verifyAccountIn: "Vérifier le compte dans",
       titletransactioninitialise: "Transaction initiée",
-      minamout: "Le montant doit-etre supérieur à 500!",
+      minamout: "Le montant minimum de recharge est de 2 000 FCFA.",
       textforjustificatif: `Devenez chauffeur partenaire TOYA : plus vous roulez, plus vous gagnez !
 Envoyez vos justificatifs pour activer votre compte. Validation sous 48h.`,
       textcode: `🎁 Vous avez reçu un code promo TOYA?
@@ -219,6 +219,7 @@ Entrez-le ci-dessous et profitez de votre cadeau !`,
   payment_success: "Paiement réussi !",
   payment_failed: "Paiement échoué",
   payment_pending: "Paiement en attente de confirmation...",
+  payment_expired: "Demande de recharge expirée",
   wallet_recharged: "Votre portefeuille a été rechargé avec succès !",
   checking_status: "Vérification du statut...",
   payment_initiated: "Paiement initié. Veuillez vérifier votre téléphone pour confirmer.",
@@ -681,7 +682,7 @@ Enter it below and enjoy your gift!`,
       tryaigin: "Try again",
       verifyAccountIn: "Verify the account in",
       titletransactioninitialise: "Transaction initiated",
-      minamout: "The amount must be greater than 500!",
+      minamout: "The minimum top-up amount is 2,000 FCFA.",
       textcode: `🎁 Have you received a TOYA promo code?
       Enter it below and enjoy your gift!y`,
       textforjustificatif: `Become a TOYA partner driver: the more you drive, the more you earn!
@@ -698,6 +699,7 @@ Send your supporting documents to activate your account. Validation within 48 ho
    payment_success: "Payment successful!",
   payment_failed: "Payment failed",
   payment_pending: "Payment pending confirmation...",
+  payment_expired: "Top-up request expired",
   wallet_recharged: "Your wallet has been recharged successfully!",
   checking_status: "Checking status...",
   payment_initiated: "Payment initiated. Please check your phone to confirm.",

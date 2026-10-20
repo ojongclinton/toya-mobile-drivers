@@ -721,12 +721,16 @@ export default function Wallet({ navigation }: { navigation: any }) {
             );
             
             disconnectWebSocket();
-          } else if (status === "FAILED" || status === "ERRORED") {
-            const errorMsg = data.status?.message?.fr?.message_fr || 
+          } else if (status === "FAILED" || status === "ERRORED" || status === "EXPIRED") {
+            const terminalTitle = status === "EXPIRED"
+              ? t("payment_expired") || "Demande de recharge expirée"
+              : t("payment_failed") || "Paiement échoué";
+            const errorMsg = data.status?.failure_message ||
+                           data.status?.message?.fr?.message_fr ||
                            data.status?.message?.en?.message_en || 
-                           t("payment_failed") || "Le paiement a échoué";
+                           terminalTitle;
             
-            setPaymentStatus(t("payment_failed") || "Paiement échoué");
+            setPaymentStatus(terminalTitle);
             setIsLoading(false);
             
             if (pollIntervalRef.current) {
@@ -734,7 +738,7 @@ export default function Wallet({ navigation }: { navigation: any }) {
             }
             
             Alert.alert(
-              t("payment_failed") || "Paiement échoué",
+              terminalTitle,
               errorMsg
             );
             
@@ -822,17 +826,20 @@ export default function Wallet({ navigation }: { navigation: any }) {
             },
           ]
         );
-      } else if (data.status === "FAILED") {
+      } else if (data.status === "FAILED" || data.status === "EXPIRED") {
+        const terminalTitle = data.status === "EXPIRED"
+          ? t("payment_expired") || "Demande de recharge expirée"
+          : t("payment_failed") || "Paiement échoué";
         setIsLoading(false);
-        setPaymentStatus(t("payment_failed") || "Paiement échoué");
+        setPaymentStatus(terminalTitle);
         
         if (pollIntervalRef.current) {
           clearInterval(pollIntervalRef.current);
         }
         
         Alert.alert(
-          t("payment_failed") || "Paiement échoué",
-          t("try_again") || "Veuillez réessayer."
+          terminalTitle,
+          data.details?.failure_message || t("try_again") || "Veuillez réessayer."
         );
       } else {
         setPaymentStatus(t("payment_pending") || "Paiement toujours en attente...");
@@ -862,7 +869,7 @@ export default function Wallet({ navigation }: { navigation: any }) {
       }
     }
 
-    if (parseFloat(inputCredit) < 500) {
+    if (parseFloat(inputCredit) < 2000) {
       setErrorMessage(t("minamout"));
       setIsLoading(false);
       setTimeout(() => {
@@ -935,7 +942,11 @@ export default function Wallet({ navigation }: { navigation: any }) {
     } catch (error) {
       setIsLoading(false);
       // console.error("❌ Erreur initiation paiement:", error);
-      setErrorMessage(t("network_error") || "Erreur réseau. Veuillez réessayer.");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : t("network_error") || "Erreur réseau. Veuillez réessayer."
+      );
       
       setTimeout(() => {
         setErrorMessage("");
