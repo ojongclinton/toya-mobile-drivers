@@ -514,6 +514,14 @@ export default function Wallet({ navigation }: { navigation: any }) {
       fontSize: 12,
       fontWeight: "800",
     },
+    reservationAmounts: {
+      alignItems: "flex-end",
+      gap: 2,
+    },
+    reservationEstimate: {
+      color: "#817B8B",
+      fontSize: 11,
+    },
 
     // Modal détail transaction
     txModalOverlay: {
@@ -1210,9 +1218,14 @@ export default function Wallet({ navigation }: { navigation: any }) {
                     <Text style={styles.reservationName}>
                       {reservation.ride_label ?? `${t("ride")} #${String(reservation.ride_id).slice(0, 8)}`}
                     </Text>
-                    <Text style={styles.reservationAmount}>
-                      {Number(reservation.amount ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
-                    </Text>
+                    <View style={styles.reservationAmounts}>
+                      <Text style={styles.reservationEstimate}>
+                        {t("wallet_estimated_commission")}: {Number(reservation.estimated_commission ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                      </Text>
+                      <Text style={styles.reservationAmount}>
+                        +{reservation.margin_percent ?? walletSummary.reservation_margin_percent ?? 20}% · {Number(reservation.amount ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                      </Text>
+                    </View>
                   </View>
                 ))
               ) : (
