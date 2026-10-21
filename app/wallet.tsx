@@ -27,15 +27,20 @@ import { useTranslation } from "react-i18next";
 import { Icon } from "react-native-paper";
 
 const TX_TYPE_KEYS: Record<string, string> = {
+  opening_balance:      "tx_opening_balance",
   deposit:              "deposit",
   ride_earning:         "tx_ride_earning",
   referral_bonus:       "tx_referral_bonus",
   admin_credit:         "tx_admin_credit",
   discount_subsidy:     "tx_discount_subsidy",
+  commission_refund:    "tx_commission_refund",
+  refund:               "tx_refund",
+  adjustment_credit:    "tx_adjustment_credit",
   commission_deduction: "tx_commission_deduction",
   subscription_fee:     "tx_subscription_fee",
   penalty:              "tx_penalty",
   admin_debit:          "tx_admin_debit",
+  adjustment_debit:     "tx_adjustment_debit",
 };
 
 const TX_STATUS_KEYS: Record<string, string> = {
@@ -409,6 +414,107 @@ export default function Wallet({ navigation }: { navigation: any }) {
       fontWeight: "700",
     },
 
+    walletOverview: {
+      marginTop: 4,
+      marginBottom: 18,
+      gap: 12,
+    },
+    walletSummaryGrid: {
+      flexDirection: "row",
+      gap: 8,
+    },
+    walletSummaryCard: {
+      flex: 1,
+      borderRadius: 12,
+      padding: 12,
+      backgroundColor: "#F7F4FD",
+      borderWidth: 1,
+      borderColor: "#EEE8FA",
+    },
+    walletSummaryCardAvailable: {
+      backgroundColor: "#EEF8F1",
+      borderColor: "#D5EEDC",
+    },
+    walletSummaryCardReserved: {
+      backgroundColor: "#FFF7E8",
+      borderColor: "#F9E4B8",
+    },
+    walletSummaryLabel: {
+      color: "#6E6A75",
+      fontSize: 11,
+      fontWeight: "600",
+      marginBottom: 5,
+    },
+    walletSummaryAmount: {
+      color: "#251446",
+      fontSize: 16,
+      fontWeight: "800",
+    },
+    walletMetaRow: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      gap: 8,
+    },
+    walletMetaChip: {
+      backgroundColor: "#F5F5F7",
+      borderRadius: 20,
+      paddingHorizontal: 10,
+      paddingVertical: 7,
+    },
+    walletMetaText: {
+      color: "#56515F",
+      fontSize: 12,
+      fontWeight: "600",
+    },
+    walletGradeChip: {
+      backgroundColor: Colors.light.tint,
+      borderRadius: 20,
+      paddingHorizontal: 10,
+      paddingVertical: 7,
+    },
+    walletGradeText: {
+      color: "#FFFFFF",
+      fontSize: 12,
+      fontWeight: "700",
+    },
+    reservationSection: {
+      backgroundColor: "#FAFAFC",
+      borderWidth: 1,
+      borderColor: "#EEEEF2",
+      borderRadius: 12,
+      padding: 12,
+    },
+    reservationTitle: {
+      color: "#302A3A",
+      fontSize: 14,
+      fontWeight: "800",
+      marginBottom: 7,
+    },
+    reservationEmpty: {
+      color: "#817B8B",
+      fontSize: 12,
+      lineHeight: 18,
+    },
+    reservationRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingVertical: 8,
+      borderTopWidth: 1,
+      borderTopColor: "#EEEEF2",
+    },
+    reservationName: {
+      color: "#4A4453",
+      fontSize: 12,
+      fontWeight: "600",
+    },
+    reservationAmount: {
+      color: "#B26400",
+      fontSize: 12,
+      fontWeight: "800",
+    },
+
     // Modal détail transaction
     txModalOverlay: {
       flex: 1,
@@ -482,6 +588,16 @@ export default function Wallet({ navigation }: { navigation: any }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [credit, setCredit] = useState(0);
+  const [walletSummary, setWalletSummary] = useState<any>({
+    total_balance: 0,
+    available_balance: 0,
+    reserved_balance: 0,
+    deposited_balance: 0,
+    toya_credit_balance: 0,
+    active_reservations: [],
+    reservation_margin_percent: 20,
+    current_grade: { name: "Standard", commission_rate: 17 },
+  });
   const [inputCredit, setInputCredit] = useState("");
   const [info, setInfo] = useState("");
   const [isAddCredit, setIsAddCredit] = useState(false);
@@ -559,6 +675,10 @@ export default function Wallet({ navigation }: { navigation: any }) {
       if (Array.isArray(payload.transactions)) {
         setTransactions(payload.transactions);
         setCredit(payload.current_balance ?? 0);
+        setWalletSummary((current: any) => ({
+          ...current,
+          ...(payload.wallet_summary ?? {}),
+        }));
       } else if (Array.isArray(payload["All Transactions Wallet"])) {
         setTransactions([...payload["All Transactions Wallet"]].reverse());
         setCredit(payload["All Gain"] ?? 0);
@@ -1042,6 +1162,67 @@ export default function Wallet({ navigation }: { navigation: any }) {
             />
           }
         >
+          <View style={styles.walletOverview}>
+            <View style={styles.walletSummaryGrid}>
+              <View style={styles.walletSummaryCard}>
+                <Text style={styles.walletSummaryLabel}>{t("total_balance")}</Text>
+                <Text style={styles.walletSummaryAmount}>
+                  {Number(walletSummary.total_balance ?? credit).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                </Text>
+              </View>
+              <View style={[styles.walletSummaryCard, styles.walletSummaryCardAvailable]}>
+                <Text style={styles.walletSummaryLabel}>{t("wallet_available")}</Text>
+                <Text style={styles.walletSummaryAmount}>
+                  {Number(walletSummary.available_balance ?? credit).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                </Text>
+              </View>
+              <View style={[styles.walletSummaryCard, styles.walletSummaryCardReserved]}>
+                <Text style={styles.walletSummaryLabel}>{t("wallet_reserved")}</Text>
+                <Text style={styles.walletSummaryAmount}>
+                  {Number(walletSummary.reserved_balance ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.walletMetaRow}>
+              <View style={styles.walletGradeChip}>
+                <Text style={styles.walletGradeText}>
+                  {walletSummary.current_grade?.name ?? "Standard"} · {walletSummary.current_grade?.commission_rate ?? 17}%
+                </Text>
+              </View>
+              <View style={styles.walletMetaChip}>
+                <Text style={styles.walletMetaText}>
+                  {t("wallet_deposited")}: {Number(walletSummary.deposited_balance ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                </Text>
+              </View>
+              <View style={styles.walletMetaChip}>
+                <Text style={styles.walletMetaText}>
+                  {t("wallet_toya_credit")}: {Number(walletSummary.toya_credit_balance ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.reservationSection}>
+              <Text style={styles.reservationTitle}>{t("wallet_reservations")}</Text>
+              {Array.isArray(walletSummary.active_reservations) && walletSummary.active_reservations.length > 0 ? (
+                walletSummary.active_reservations.map((reservation: any) => (
+                  <View key={reservation.ride_id} style={styles.reservationRow}>
+                    <Text style={styles.reservationName}>
+                      {reservation.ride_label ?? `${t("ride")} #${String(reservation.ride_id).slice(0, 8)}`}
+                    </Text>
+                    <Text style={styles.reservationAmount}>
+                      {Number(reservation.amount ?? 0).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <Text style={styles.reservationEmpty}>
+                  {t("wallet_no_reservations", { margin: walletSummary.reservation_margin_percent ?? 20 })}
+                </Text>
+              )}
+            </View>
+          </View>
+
           {transactions.length > 0 ? (
             transactions.map((tx) => {
               const isCredit = tx.sign === "+";

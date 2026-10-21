@@ -1291,6 +1291,26 @@ export default function Home({ navigation }: { navigation: any }) {
           );
           return;
         }
+        if (acceptData?.error === "insufficient_wallet" || acceptData?.required_amount) {
+          const required = Number(acceptData.required_amount ?? 0).toLocaleString(
+            language === "fr" ? "fr-FR" : "en-GB"
+          );
+          const balance = Number(acceptData.current_balance ?? 0).toLocaleString(
+            language === "fr" ? "fr-FR" : "en-GB"
+          );
+          Alert.alert(
+            t("wallet_insufficient_title"),
+            acceptData?.Message || t("wallet_insufficient_body", { required, balance }),
+            [
+              { text: t("close"), style: "cancel" },
+              {
+                text: t("add_funds_button"),
+                onPress: () => navigation.navigate("wallettab"),
+              },
+            ]
+          );
+          return;
+        }
         setModalerreur(true);
         return;
       }
@@ -2401,6 +2421,11 @@ export default function Home({ navigation }: { navigation: any }) {
                     {Number(ridePricing.net_earning).toLocaleString("fr-FR")} CFA
                   </Text>
                 </View>
+                <View style={styles.commissionDetailChauffeur}>
+                  <Text style={styles.commissionDetailTextChauffeur}>
+                    {ridePricing.grade_name} · {t("commission")} {ridePricing.commission_rate}% : {Number(ridePricing.commission_amount).toLocaleString("fr-FR")} CFA
+                  </Text>
+                </View>
                 {ridePricing.discount_type && (
                   <View style={styles.discountBadgeChauffeur}>
                     <Icon source="tag" size={11} color="white" />
@@ -2857,11 +2882,13 @@ const styles = StyleSheet.create({
   etaFloating: { position: "absolute", bottom: 299, right: 22, width: 68, flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: Colors.light.tint, paddingVertical: 10, borderRadius: 8, gap: 4, elevation: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 },
   speedFloating: { position: "absolute", bottom: 360, right: 22, width: 75, flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: Colors.light.tint, paddingVertical: 13, borderRadius: 8, gap: 4, elevation: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 4 },
   cancelRideButton: { width: 36, height: 36, borderRadius: 18, backgroundColor: "#e53935", justifyContent: "center", alignItems: "center", marginHorizontal: 4 },
-  pricingRowChauffeur: { flexDirection: "row", alignItems: "center", justifyContent: "space-around", alignSelf: "stretch", paddingHorizontal: 10, paddingVertical: 10, marginBottom: 10, borderRadius: 14, backgroundColor: "#FFFFFF", borderWidth: 1, borderColor: "#e0e0e0", elevation: 4, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 4 },
+  pricingRowChauffeur: { flexDirection: "row", alignItems: "center", justifyContent: "space-around", alignSelf: "stretch", paddingHorizontal: 10, paddingVertical: 10, marginBottom: 30, borderRadius: 14, backgroundColor: "#FFFFFF", borderWidth: 1, borderColor: "#e0e0e0", elevation: 4, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 4 },
   pricingItemChauffeur: { flex: 1, alignItems: "center" },
   pricingLabelChauffeur: { fontSize: 9, color: "#555", fontWeight: "700", textTransform: "uppercase", marginBottom: 2 },
   pricingValueChauffeur: { fontSize: 12, fontWeight: "900", color: "#111" },
   pricingDividerChauffeur: { width: 1, height: 28, backgroundColor: "#e0e0e0" },
+  commissionDetailChauffeur: { position: "absolute", left: 10, bottom: -22, backgroundColor: "#F7F4FD", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 },
+  commissionDetailTextChauffeur: { fontSize: 10, color: "#5B3A9E", fontWeight: "700" },
   discountBadgeChauffeur: { flexDirection: "row", gap: 4, backgroundColor: "#FF9800", paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10, alignItems: "center", marginLeft: 8 },
   discountBadgeTextChauffeur: { fontSize: 10, color: "white", fontWeight: "600" },
 
@@ -2940,4 +2967,3 @@ const styles = StyleSheet.create({
     color: "#666",
   },
 });
-
