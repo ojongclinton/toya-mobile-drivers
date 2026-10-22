@@ -95,38 +95,67 @@ export default function Wallet({ navigation }: { navigation: any }) {
       backgroundColor: Colors.light.tint,
     },
     header: {
-      height: 350,
-      alignItems: "center",
+      height: 280,
       backgroundColor: Colors.light.tint,
+      paddingHorizontal: 16,
+      paddingTop: 12,
     },
-    headerContent: {
-      flex: 1,
-      alignItems: "center",
-      marginTop: 25,
-    },
-    infoContent: {
+    headerTopRow: {
+      width: "100%",
       flexDirection: "row",
       alignItems: "center",
-      marginTop: 50,
+      justifyContent: "space-between",
+    },
+    headerRechargeButton: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 18,
+      backgroundColor: "#fff",
+    },
+    headerRechargeText: {
+      color: Colors.light.tint,
+      fontSize: 12,
+      fontWeight: "700",
+    },
+    headerProfileRow: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 18,
     },
     headerTitle: {
-      fontSize: 25,
+      fontSize: 23,
       fontWeight: "bold",
       color: "white",
     },
     headerImage: {
-      marginTop: 25,
-      width: 80,
-      height: 80,
+      width: 58,
+      height: 58,
       borderRadius: 100,
+      marginRight: 12,
     },
     headerText: {
-      fontSize: 20,
+      fontSize: 18,
+      fontWeight: "600",
       color: "white",
     },
     headerBody: {
       alignItems: "center",
-      marginBottom: 50,
+      marginTop: 15,
+    },
+    headerBalanceLabel: {
+      color: "rgba(255,255,255,0.82)",
+      fontSize: 14,
+      fontWeight: "500",
+    },
+    headerBalanceAmount: {
+      color: "white",
+      fontSize: 29,
+      fontWeight: "800",
+      marginTop: 2,
     },
     body: {
       flex: 1,
@@ -1131,8 +1160,18 @@ export default function Wallet({ navigation }: { navigation: any }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerContent}>
+        <View style={styles.headerTopRow}>
           <Text style={styles.headerTitle}>{t("wallet")}</Text>
+          <TouchableOpacity
+            style={styles.headerRechargeButton}
+            onPress={showAddCredit}
+            activeOpacity={0.8}
+          >
+            <Icon source="plus-circle-outline" size={17} color={Colors.light.tint} />
+            <Text style={styles.headerRechargeText}>{t("add_funds_button")}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.headerProfileRow}>
           {url ? (
             <Image style={styles.headerImage} source={{ uri: url }} />
           ) : (
@@ -1146,10 +1185,8 @@ export default function Wallet({ navigation }: { navigation: any }) {
           </Text>
         </View>
         <View style={styles.headerBody}>
-          <Text style={{ color: "white", fontSize: 20 }}>
-            {t("total_balance")}
-          </Text>
-          <Text style={{ color: "white", fontWeight: "bold", fontSize: 30 }}>
+          <Text style={styles.headerBalanceLabel}>{t("total_balance")}</Text>
+          <Text style={styles.headerBalanceAmount}>
             {Number(credit).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F CFA
           </Text>
         </View>
@@ -1279,14 +1316,6 @@ export default function Wallet({ navigation }: { navigation: any }) {
           )}
         </ScrollView>
 
-        <TouchableOpacity
-          style={styles.buttonAddCredit}
-          onPress={showAddCredit}
-        >
-          <Text style={styles.textButtonAddCredit}>
-            {t("add_funds_button")}
-          </Text>
-        </TouchableOpacity>
       </View>
 
       {/* Modal détail transaction */}
