@@ -120,11 +120,22 @@ export default function Wallet({ navigation }: { navigation: any }) {
       fontSize: 12,
       fontWeight: "700",
     },
-    headerProfileRow: {
+    headerProfileCard: {
       flexDirection: "row",
       alignItems: "center",
-      justifyContent: "center",
-      marginTop: 18,
+      justifyContent: "space-between",
+      marginTop: 22,
+      padding: 14,
+      borderRadius: 22,
+      backgroundColor: "rgba(255,255,255,0.16)",
+      borderWidth: 1,
+      borderColor: "rgba(255,255,255,0.24)",
+    },
+    headerIdentity: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1,
+      minWidth: 0,
     },
     headerTitle: {
       fontSize: 23,
@@ -132,19 +143,21 @@ export default function Wallet({ navigation }: { navigation: any }) {
       color: "white",
     },
     headerImage: {
-      width: 58,
-      height: 58,
+      width: 54,
+      height: 54,
       borderRadius: 100,
       marginRight: 12,
     },
     headerText: {
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: "600",
       color: "white",
+      flexShrink: 1,
     },
-    headerBody: {
-      alignItems: "center",
-      marginTop: 15,
+    headerBalanceBlock: {
+      alignItems: "flex-end",
+      marginLeft: 12,
+      maxWidth: "54%",
     },
     headerBalanceLabel: {
       color: "rgba(255,255,255,0.82)",
@@ -153,9 +166,10 @@ export default function Wallet({ navigation }: { navigation: any }) {
     },
     headerBalanceAmount: {
       color: "white",
-      fontSize: 29,
+      fontSize: 22,
       fontWeight: "800",
       marginTop: 2,
+      textAlign: "right",
     },
     body: {
       flex: 1,
@@ -1171,24 +1185,26 @@ export default function Wallet({ navigation }: { navigation: any }) {
             <Text style={styles.headerRechargeText}>{t("add_funds_button")}</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.headerProfileRow}>
-          {url ? (
-            <Image style={styles.headerImage} source={{ uri: url }} />
-          ) : (
-            <Image
-              style={styles.headerImage}
-              source={require("../assets/images/profile.jpg")}
-            />
-          )}
-          <Text style={styles.headerText}>
-            {firstName} {lastName}
-          </Text>
-        </View>
-        <View style={styles.headerBody}>
-          <Text style={styles.headerBalanceLabel}>{t("total_balance")}</Text>
-          <Text style={styles.headerBalanceAmount}>
-            {Number(credit).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F CFA
-          </Text>
+        <View style={styles.headerProfileCard}>
+          <View style={styles.headerIdentity}>
+            {url ? (
+              <Image style={styles.headerImage} source={{ uri: url }} />
+            ) : (
+              <Image
+                style={styles.headerImage}
+                source={require("../assets/images/profile.jpg")}
+              />
+            )}
+            <Text style={styles.headerText} numberOfLines={2}>
+              {firstName} {lastName}
+            </Text>
+          </View>
+          <View style={styles.headerBalanceBlock}>
+            <Text style={styles.headerBalanceLabel}>{t("total_balance")}</Text>
+            <Text style={styles.headerBalanceAmount} numberOfLines={1} adjustsFontSizeToFit>
+              {Number(credit).toLocaleString(i18n.language.startsWith("fr") ? "fr-FR" : "en-GB")} F CFA
+            </Text>
+          </View>
         </View>
       </View>
       <View style={styles.body}>
