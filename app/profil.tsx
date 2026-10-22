@@ -39,6 +39,7 @@ export default function Profil({ navigation }: { navigation: any }) {
   const [modalVisiblewant, setModalVisiblewant] = useState(false);
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showExceptionalWithdrawal, setShowExceptionalWithdrawal] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -56,6 +57,21 @@ export default function Profil({ navigation }: { navigation: any }) {
         }
       };
       getData();
+      const getExceptionalWithdrawalAvailability = async () => {
+        try {
+          const token = await AsyncStorage.getItem("authToken");
+          const response = await fetch(`${BASE_URL}/payments/wallet/exceptional-withdrawal/`, {
+            headers: { Authorization: `Bearer ${token}`, Accept: "application/json" },
+          });
+          const body = await response.json();
+          if (!response.ok) return;
+          const data = body?.Data || {};
+          setShowExceptionalWithdrawal(Boolean(data.can_request || data.pending_request));
+        } catch {
+          setShowExceptionalWithdrawal(false);
+        }
+      };
+      getExceptionalWithdrawalAvailability();
     }, [])
   );
 
@@ -311,6 +327,22 @@ export default function Profil({ navigation }: { navigation: any }) {
             <Text style={[styles.menuText, isTablet && style.menuTextTablet]}>{t("verification")}</Text>
           </TouchableOpacity>
 
+          {showExceptionalWithdrawal && (
+            <>
+              <View style={styles.separator} />
+              <TouchableOpacity
+                style={[styles.menuContainer, isTablet && style.menuItemTablet]}
+                onPress={() => navigation.navigate("ExceptionalWithdrawal")}
+              >
+                <Icon source="bank-transfer-out" size={isTablet ? 24 : 20} color="#56318a" />
+                <View style={style.withdrawalMenuTextWrap}>
+                  <Text style={[styles.menuText, isTablet && style.menuTextTablet]}>Retrait exceptionnel</Text>
+                  <Text style={style.withdrawalMenuCaption}>Disponible selon votre argent rechargé</Text>
+                </View>
+              </TouchableOpacity>
+            </>
+          )}
+
           <View style={styles.separator} />
           <TouchableOpacity 
             style={[styles.menuContainer, isTablet && style.menuItemTablet]} 
@@ -528,6 +560,17 @@ const style = StyleSheet.create({
   deleteAccountText: {
     color: '#d32f2f',
     fontWeight: '600',
+  },
+
+  withdrawalMenuTextWrap: {
+    flex: 1,
+  },
+
+  withdrawalMenuCaption: {
+    marginLeft: 14,
+    marginTop: 2,
+    color: '#756d80',
+    fontSize: 11,
   },
 
   modalContainer: {

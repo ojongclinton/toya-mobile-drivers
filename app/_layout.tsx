@@ -34,6 +34,7 @@ import i18n from "./translation";
 import { StatusBar } from 'expo-status-bar';
 import MyStatistics from "./profiles/MyStatistics";
 import MyGrades from "./profiles/MyGrades";
+import ExceptionalWithdrawal from "./profiles/ExceptionalWithdrawal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BASE_URL from "../constants/api/BASE_URL";
 import messaging from '@react-native-firebase/messaging';
@@ -332,6 +333,11 @@ function AppNavigator() {
         component={MyStatistics}
         options={{ headerShown: false }}
       />
+        <Stack.Screen
+          name="ExceptionalWithdrawal"
+          component={ExceptionalWithdrawal}
+          options={{ headerShown: false }}
+        />
       <Stack.Screen
         name="user_profile"
         component={UserProfile}
